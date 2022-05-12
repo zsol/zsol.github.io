@@ -10,10 +10,12 @@
     <pre id="src" />
     <button id="blacken">Any color you want</button>
     <py-script>
-      src = Element("src")
-      def blacken(evt=None):
-        src.innerText = black.format_str(src.innerText, mode=black.Mode())
-      Element("blacken").onclick = blacken
+        src = Element("src")
+
+        def blacken(evt=None):
+            src.innerText = black.format_str(src.innerText, mode=black.Mode())
+
+        Element("blacken").onclick = blacken
     </py-script>
   </body>
 </html>
