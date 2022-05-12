@@ -1,21 +1,34 @@
 <html>
+
 <head>
-<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+  <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+  <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
   <py-env>
-    - black
+- black
   </py-env>
-  </head>
-  <body>
-    <pre id="src" />
-    <button id="blacken">Any color you want</button>
-    <py-script>
-        src = Element("src")
+  <py-script>
+from js import document
+import sys
+import importlib
+from unittest.mock import MagicMock
+sys.modules['_multiprocessing'] = MagicMock()
+import black
+def blacken(evt=None):
+  src_el = document.getElementById("source")
+  src_el.value = black.format_str(src_el.value, mode=black.Mode())
 
-        def blacken(evt=None):
-            src.innerText = black.format_str(src.innerText, mode=black.Mode())
+document.getElementById("go").onclick = blacken
+  </py-script>
+</head>
 
-        Element("blacken").onclick = blacken
-    </py-script>
-  </body>
+<body>
+  <div>
+    <textarea id="source" rows="10" cols="88">
+# add your stuff here
+print('hello')
+    </textarea>
+  </div>
+  <button id="go" type="button" style="border: 2px solid">"Any color you want"</button>
+</body>
+
 </html>
