@@ -15,28 +15,43 @@
     from unittest.mock import MagicMock
     sys.modules['_multiprocessing'] = MagicMock()
     import black
+    src_el = document.getElementById("source")
+    dst_el = document.getElementById("output")
     def blacken(evt=None):
-      src_el = document.getElementById("source")
-      src_el.value = black.format_str(src_el.value, mode=black.Mode())
+      try:
+        dst_el.value = black.format_str(src_el.value, mode=black.Mode())
+        src_el.setCustomValidity("")
+      except black.parsing.InvalidInput as e:
+        src_el.setCustomValidity(f"💥 💔 💥 {e}")
+        src_el.reportValidity()
+      except Exception as e:
+        src_el.setCustomValidity(f"Black blew up: {e}")
+        src_el.reportValidity()
 
-    document.getElementById("go").onclick = blacken
+    document.getElementById("source").onkeyup = blacken
+    blacken()
   </py-script>
 </head>
 
 <body>
   <div class="mainContainer">
-    <h1>Test yer stuff!</h1>
+    <h1>Any color you like</h1>
     <div class="codeArea">
-      <textarea id="source" rows="10" cols="88">
-# add your stuff here
+      <div class="codePane">
+        <span>ugly code</span>
+        <textarea id="source" rows="10" cols="88">
+# Python code goes here
 print(
   [ 'hello',
   'world'
   ])
         </textarea>
-    </div>
-    <div class="buttonBar">
-      <button id="go" type="button">"Any color you want"</button>
+      </div>
+      <div class="codePane">
+        <span>✨ 🍰 ✨</span>
+        <textarea id="output" rows="10" cols="88" readonly="true">
+        </textarea>
+      </div>
     </div>
   </div>
 </body>
