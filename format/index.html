@@ -1,32 +1,33 @@
 <html>
-  <head>
-    <title>Page title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-    <link rel="stylesheet" href="./styles.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-    <py-env> - black </py-env>
-    <py-script>
-      from js import document import sys import importlib from unittest.mock
-      import MagicMock sys.modules['_multiprocessing'] = MagicMock() import
-      black def blacken(evt=None): src_el = document.getElementById("source")
-      src_el.value = black.format_str(src_el.value, mode=black.Mode())
-      document.getElementById("go").onclick = blacken
-    </py-script>
-  </head>
 
-  <body>
-    <div class="mainContainer">
-      <h1>Test yer stuff!</h1>
-      <div class="codeArea">
-        <textarea id="source" rows="10" cols="88">
+<head>
+  <title>Page title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+  <py-env>
+    - black
+  </py-env>
+  <py-script src="index.py"></py-script>
+</head>
+
+<body>
+  <div class="mainContainer">
+    <h1>Test yer stuff!</h1>
+    <div class="codeArea">
+      <textarea id="source" rows="10" cols="88">
 # add your stuff here
-print('hello')
+print(
+  [ 'hello',
+  'world'
+  ])
         </textarea>
-      </div>
-      <div class="buttonBar">
-        <button id="go" type="button">"Any color you want"</button>
-      </div>
     </div>
-  </body>
+    <div class="buttonBar">
+      <button id="go" type="button">"Any color you want"</button>
+    </div>
+  </div>
+</body>
+
 </html>
