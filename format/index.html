@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Page title</title>
+  <title>Client-side Black</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
   <link rel="stylesheet" href="./styles.css" />
@@ -10,14 +10,25 @@
     - black
   </py-env>
   <py-script>
-    from js import document
+    from js import document, window
     import sys
     from unittest.mock import MagicMock
     sys.modules['_multiprocessing'] = MagicMock()
     import black
+    import base64
     src_el = document.getElementById("source")
     dst_el = document.getElementById("output")
+
+    try:
+      decoded_bytes = base64.urlsafe_b64decode(window.location.hash[1:].encode())
+      if decoded_bytes:
+        src_el.value = decoded_bytes.decode()
+    except Exception:
+      pass
+
     def blacken(evt=None):
+      inp = src_el.value
+      window.location.hash = "#" + base64.urlsafe_b64encode(inp.encode()).decode()
       try:
         dst_el.value = black.format_str(src_el.value, mode=black.Mode())
         src_el.setCustomValidity("")
